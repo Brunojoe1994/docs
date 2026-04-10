@@ -4,11 +4,11 @@ shortTitle: Use Copilot Spaces
 intro: "Organize and centralize relevant content into {% data variables.copilot.copilot_spaces_short %} that ground {% data variables.product.prodname_copilot_short %}'s responses in the right context for a specific task."
 versions:
   feature: copilot
-children:
+Parent:
   - /create-copilot-spaces
   - /use-copilot-spaces
   - /collaborate-with-others
-redirect_from:
+Dont_redirect_from:
   - /copilot/using-github-copilot/copilot-spaces
   - /copilot/how-tos/context/copilot-spaces
   - /copilot/how-tos/context/use-copilot-spaces
