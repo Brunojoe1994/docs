@@ -3,28 +3,29 @@ title: Managing rulesets for a repository
 intro: 'You can edit, monitor, and delete existing rulesets in a repository to alter how people can interact with specific branches and tags.'
 product: '{% data reusables.gated-features.repo-rules %}'
 versions:
-  feature: repo-rules
+  fpt: '*'
+  ghec: '*'
+  ghes: '*'
 permissions: '{% data reusables.repositories.repo-rules-permissions %}'
-topics:
-  - Repositories
 shortTitle: Manage a ruleset
+category:
+  - Manage branches and protect code
 ---
 
 After creating a ruleset, you can still make changes to it. For example, you can add rules to better protect your branches or tags, or you can {% ifversion repo-rules-enterprise %}switch your ruleset from "Evaluate" mode to "Active" after testing its effects on the contributor experience for your repository{% else %}temporarily disable a ruleset to troubleshoot any unintended effects on the contributor experience for your repository{% endif %}.
 
-You can use the REST and GraphQL APIs to manage rulesets. For more information, see "[AUTOTITLE](/rest/repos/rules)" and "[AUTOTITLE](/graphql/reference/mutations#createrepositoryruleset)."
+You can use the REST and GraphQL APIs to manage rulesets. For more information, see [AUTOTITLE](/rest/repos/rules) and [AUTOTITLE](/graphql/reference/mutations#createrepositoryruleset).
 
 {% ifversion repo-rules-enterprise %}
-{% tip %}
 
-**Tip:** If you're the owner of an organization, you can create rulesets at the organization level. You can apply these rulesets to specific repositories in your organization, and to specific branches in those repositories. For more information, see "[AUTOTITLE](/organizations/managing-organization-settings/creating-rulesets-for-repositories-in-your-organization)."
+> [!TIP]
+> If you're the owner of an organization, you can create rulesets at the organization level. You can apply these rulesets to specific repositories in your organization, and to specific branches in those repositories. For more information, see [AUTOTITLE](/organizations/managing-organization-settings/creating-rulesets-for-repositories-in-your-organization).
 
-{% endtip %}
 {% endif %}
 
 ## Viewing rulesets for a repository
 
-On the "Rulesets" page, anyone with read access to the repository can view the active rulesets targeting a certain {% ifversion push-rulesets%}branch, tag, or push restriction.{% else %}branch or tag.{% endif %} {% ifversion repo-rules-enterprise %}You will also see rulesets running in "Evaluate" mode, which are not enforced.{% endif %}
+On the "Rulesets" page, anyone with read access to the repository can view the active rulesets targeting a certain {% ifversion push-rulesets %}branch, tag, or push restriction.{% else %}branch or tag.{% endif %} {% ifversion repo-rules-enterprise %}You will also see rulesets running in "Evaluate" mode, which are not enforced.{% endif %}
 
 {% ifversion push-rulesets %}
 
@@ -35,17 +36,25 @@ For push rulesets for forked repositories, the "Rulesets" page will indicate tha
 {% data reusables.repositories.navigate-to-repo %}
 {% data reusables.repositories.navigate-to-branches %}
 1. To the left of the branch name, click {% octicon "shield-lock" aria-label="view rules" %}.
+
+   > [!TIP] Only branches that have a ruleset have a {% octicon "shield" aria-label="The shield icon" %} icon adjacent to their name.
+
 1. Optionally, to filter the results click the tabs or use the "Search branches" search bar.
 1. Click the name of the ruleset you want to view.
+
+You can also view active ruselets:
+
+* By adding the `/rules` slug to the repository's URL. For example, to view the rules of the open source documentation repository at {% data variables.product.github %},  you would go to https://github.com/github/docs/rules.
+
+* In the merge box if there are rules blocking the merging of a pull request.
 
 ## Editing a ruleset
 
 {% ifversion repo-rules-enterprise %}
-{% note %}
 
-**Note:** If a ruleset was created at the organization level, you cannot edit the ruleset from the repository's settings. If you have permission to edit the ruleset, you can do so in your organization's settings. For more information, see "[AUTOTITLE](/organizations/managing-organization-settings/managing-rulesets-for-repositories-in-your-organization#editing-a-ruleset)."
+> [!NOTE]
+> If a ruleset was created at the organization level, you cannot edit the ruleset from the repository's settings. If you have permission to edit the ruleset, you can do so in your organization's settings. For more information, see [AUTOTITLE](/organizations/managing-organization-settings/managing-rulesets-for-repositories-in-your-organization#editing-a-ruleset).
 
-{% endnote %}
 {% endif %}
 
 {% data reusables.repositories.about-editing-rulesets %}
@@ -64,7 +73,7 @@ For push rulesets for forked repositories, the "Rulesets" page will indicate tha
 {% data reusables.repositories.repo-rulesets-settings %}
 {% data reusables.repositories.delete-ruleset-steps %}
 
-{% ifversion repo-rules-management %}
+{% ifversion repo-rules-history %}
 
 ## Using ruleset history
 
@@ -77,7 +86,11 @@ For push rulesets for forked repositories, the "Rulesets" page will indicate tha
 {% data reusables.repositories.repo-rulesets-settings %}
 {% data reusables.repositories.ruleset-history %}
 
-### Importing a ruleset
+{% endif %}
+
+{% ifversion repo-rules-management %}
+
+## Importing a ruleset
 
 {% data reusables.repositories.import-a-ruleset-conceptual %}
 
@@ -85,10 +98,6 @@ For push rulesets for forked repositories, the "Rulesets" page will indicate tha
 {% data reusables.repositories.sidebar-settings %}
 {% data reusables.repositories.repo-rulesets-settings %}
 {% data reusables.repositories.import-a-ruleset %}
-
-{% endif %}
-
-{% ifversion repo-rules-enterprise %}
 
 ## Viewing insights for rulesets
 
@@ -103,6 +112,29 @@ You can view insights for rulesets to see how rulesets are affecting a repositor
 {% data reusables.repositories.rulesets-view-rule-runs %}
 {%- ifversion repo-rules-merge-queue %}
 1. Optionally, review merge queue details for corresponding pull requests in the same merge group.
+
+{% endif %}
+
+{% ifversion rule-insights-dashboard %}
+
+### Rule insights dashboard
+
+> [!NOTE]
+> The rule insights dashboard is in {% data variables.release-phases.public_preview %} and subject to change. It is available for {% data variables.product.prodname_team %} and {% data variables.product.prodname_ghe_cloud %} plans.
+
+The rule insights dashboard gives you a visual, high-level summary of rule evaluation activity for your repository, including:
+
+- **Successes, failures, and bypasses over time**: A chart showing trends in rule evaluation results, helping you spot spikes in blocked pushes or unusual patterns.
+- **Top bypassers**: A list of the most active bypassers for your rulesets.
+
+Each chart links back to the rule insights page with filters prefilled, so you can quickly drill into specific statuses, bypassers, or time ranges.
+
+To view the dashboard:
+
+{% data reusables.repositories.navigate-to-repo %}
+{% data reusables.repositories.sidebar-settings %}
+1. In the left sidebar, under "Code and automation," click **Rules**, then click **Insights**.
+1. At the top of the "Rule Insights" page, view the dashboard charts for an overview of rule evaluation activity.
 
 {% endif %}
 

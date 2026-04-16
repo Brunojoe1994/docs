@@ -5,9 +5,8 @@ redirect_from:
   - /github/site-policy/github-research-program-terms
 versions:
   fpt: '*'
-topics:
-  - Policy
-  - Legal
+category:
+  - Review product and program terms
 ---
 
 Welcome to the GitHub Research Program (the "Program")! To participate, we’ll need you to agree to a special set of terms, the GitHub Research Program Agreement (“Agreement”).
@@ -30,7 +29,7 @@ The obligations in this Section 2 won’t apply to information that you can prov
 
 ## C. Reservation of Rights
 
-All Confidential Information remains the sole and exclusive property of GitHub.  Neither party acquires any intellectual property rights under this Agreement, unless expressly specified herein.
+All Confidential Information remains the sole and exclusive property of GitHub. Neither party acquires any intellectual property rights under this Agreement, unless expressly specified herein.
 
 ## D. Privacy
 

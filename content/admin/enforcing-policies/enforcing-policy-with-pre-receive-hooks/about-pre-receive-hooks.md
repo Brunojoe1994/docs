@@ -8,11 +8,9 @@ redirect_from:
   - /admin/policies/enforcing-policy-with-pre-receive-hooks/about-pre-receive-hooks
 versions:
   ghes: '*'
-type: overview
-topics:
-  - Enterprise
-  - Policies
-  - Pre-receive hooks
+contentType: concepts
+category:
+  - Secure and govern your enterprise
 ---
 
 ## About pre-receive hooks
@@ -41,8 +39,31 @@ Due to risk of failure and performance impact for all users of your instance, we
 * Avoid API requests within a pre-receive hook. In particular, we strongly discourage that you make requests to external services, which may take longer and can compound performance impact.
 * Avoid long-running Git operations within a pre-receive hook. If your pre-receive hook performs Git operations within large or busy repositories, your instance's Git and overall performance may be negatively impacted.
 
-{% note %}
+> [!NOTE]
+> To avoid rejection of a push due to a timeout, all combined pre-receive hooks should run in under five seconds.
 
-**Note:** To avoid rejection of a push due to a timeout, all combined pre-receive hooks should run in under five seconds.
+## Pre-receive hook timeouts
 
-{% endnote %}
+Pre-receive hooks in {% data variables.product.prodname_ghe_server %} have a fixed timeout budget of 5 seconds (shared across all hooks). This is intentional design to prevent resource exhaustion from long-running hooks and to prevent runaway scripts from blocking repository operations indefinitely.
+
+All pre-receive hooks for a repository share a **cumulative timeout budget**:
+- If hook A takes 3 seconds, hook B gets 2 seconds remaining (from 5 second default)
+- If hook A times out at 5 seconds, hook B never executes
+
+> [!IMPORTANT]
+> Pre-receive hook timeouts are handled differently from exit codes:
+> - **Exit codes**: Enforcement configuration is honored (non-enforced hooks don't block pushes)
+> - **Timeouts**: Push may fail regardless of enforcement configuration
+
+### Timeout behavior
+
+Scenario | Enforcement = Enabled | Enforcement = Disabled/Testing
+----------|----------------------|--------------------------------
+Exit code ≠ 0 | Push rejected | Push continues (warning only)
+Timeout exceeded | Push rejected | Warning + push may still fail
+
+{% ifversion ghes > 3.16 %}
+
+{% data reusables.repositories.push-rule-and-prereceive-hooks %}
+
+{% endif %}

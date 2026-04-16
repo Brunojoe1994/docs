@@ -5,16 +5,15 @@
 * Java/Kotlin
 * JavaScript/TypeScript
 * Python
-* Ruby
+* Ruby{% ifversion codeql-rust-available %}
+* Rust{% else ifversion codeql-rust-public-preview %}
+* Rust (public preview){% endif %}
 * Swift
+{% ifversion code-scanning-actions-language %}* {% data variables.product.prodname_actions %} workflows{% endif %}
 
-{% note %}
+> [!NOTE]
+>
+> * Use `java-kotlin` to analyze code written in Java, Kotlin or both.
+> * Use `javascript-typescript` to analyze code written in JavaScript, TypeScript or both.
 
-**Notes**:
-
-* Use {% ifversion codeql-language-identifiers-311 %}`java-kotlin`{% else %}`java`{% endif %} to analyze code written in Java, Kotlin or both.
-* Use {% ifversion codeql-language-identifiers-311 %}`javascript-typescript`{% else %}`javascript`{% endif %} to analyze code written in JavaScript, TypeScript or both.
-
-{% endnote %}
-
-For more information, see the documentation on the {% data variables.product.prodname_codeql %} website: "[Supported languages and frameworks](https://codeql.github.com/docs/codeql-overview/supported-languages-and-frameworks/)."
+For more information, see the documentation on the {% data variables.product.prodname_codeql %} website: [Supported languages and frameworks](https://codeql.github.com/docs/codeql-overview/supported-languages-and-frameworks/).

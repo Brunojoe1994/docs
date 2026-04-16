@@ -9,9 +9,6 @@ versions:
   fpt: '*'
   ghes: '*'
   ghec: '*'
-topics:
-  - Organizations
-  - Teams
 children:
   - /about-organizations
   - /about-your-organization-dashboard
@@ -21,7 +18,7 @@ children:
   - /customizing-your-organizations-profile
   - /about-your-organizations-news-feed
   - /viewing-insights-for-dependencies-in-your-organization
-  - /viewing-usage-metrics-for-github-actions
+  - /viewing-github-actions-metrics-for-your-organization
 shortTitle: Collaborate with groups
 ---
 

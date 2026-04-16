@@ -1,10 +1,10 @@
+import { isArchivedVersion } from '@/archives/lib/is-archived-version'
+import { languagePrefixPathRegex } from '@/languages/lib/languages-server'
+import versionSatisfiesRange from '@/versions/lib/version-satisfies-range'
 import type { NextFunction, Request, Response } from 'express'
 import helmet from 'helmet'
-import { isArchivedVersion } from '@/archives/lib/is-archived-version.js'
-import versionSatisfiesRange from '@/versions/lib/version-satisfies-range.js'
 
 const isDev = process.env.NODE_ENV === 'development'
-const AZURE_STORAGE_URL = 'githubdocs.azureedge.net'
 const GITHUB_DOMAINS = [
   "'self'",
   'github.com',
@@ -15,11 +15,9 @@ const GITHUB_DOMAINS = [
 
 const DEFAULT_OPTIONS = {
   crossOriginResourcePolicy: true,
-  crossOriginEmbedderPolicy: false, // doesn't work with youtube
+  crossOriginEmbedderPolicy: false,
   referrerPolicy: {
-    // See docs-engineering #2426
-    // The `... as 'no-referrer-when-downgrade'` is a workaround for TypeScript
-    policy: 'no-referrer-when-downgrade' as 'no-referrer-when-downgrade',
+    policy: 'no-referrer-when-downgrade' as const,
   },
   // This module defines a Content Security Policy (CSP) to disallow
   // inline scripts and content from untrusted sources.
@@ -29,16 +27,19 @@ const DEFAULT_OPTIONS = {
       prefetchSrc: ["'self'"],
       // When doing local dev, especially in Safari, you need to add `ws:`
       // which NextJS uses for the hot module reloading.
-      connectSrc: ["'self'", isDev && 'ws:'].filter(Boolean) as string[],
-      fontSrc: ["'self'", 'data:', AZURE_STORAGE_URL],
-      imgSrc: [...GITHUB_DOMAINS, 'data:', AZURE_STORAGE_URL, 'placehold.it'],
+      connectSrc: ["'self'", 'https://collector.githubapp.com', isDev && 'ws:'].filter(
+        Boolean,
+      ) as string[],
+      fontSrc: ["'self'", 'data:'],
+      imgSrc: [...GITHUB_DOMAINS, 'data:', 'placehold.it'],
       objectSrc: ["'self'"],
       // For use during development only!
       // `unsafe-eval` allows us to use a performant webpack devtool setting (eval)
       // https://webpack.js.org/configuration/devtool/#devtool
-      scriptSrc: ["'self'", 'data:', AZURE_STORAGE_URL, isDev && "'unsafe-eval'"].filter(
+      scriptSrc: [...GITHUB_DOMAINS, "'self'", 'data:', isDev && "'unsafe-eval'"].filter(
         Boolean,
       ) as string[],
+      scriptSrcAttr: ["'self'"],
       frameSrc: [
         ...GITHUB_DOMAINS,
         isDev && 'http://localhost:3000',
@@ -47,10 +48,9 @@ const DEFAULT_OPTIONS = {
           ? 'https://support.github.com'
           : // Assume that a developer is not testing the VA iframe locally if this env var is not set
             process.env.SUPPORT_PORTAL_URL || '',
-        'https://www.youtube-nocookie.com',
       ].filter(Boolean) as string[],
       frameAncestors: isDev ? ['*'] : [...GITHUB_DOMAINS],
-      styleSrc: ["'self'", "'unsafe-inline'", 'data:', AZURE_STORAGE_URL],
+      styleSrc: [...GITHUB_DOMAINS, "'self'", "'unsafe-inline'", 'data:'],
       childSrc: ["'self'"], // exception for search in deprecated GHE versions
       manifestSrc: ["'self'"],
       upgradeInsecureRequests: isDev ? null : [],
@@ -59,7 +59,7 @@ const DEFAULT_OPTIONS = {
 }
 
 const NODE_DEPRECATED_OPTIONS = structuredClone(DEFAULT_OPTIONS)
-const { directives: ndDirs } = NODE_DEPRECATED_OPTIONS.contentSecurityPolicy
+const ndDirs = NODE_DEPRECATED_OPTIONS.contentSecurityPolicy.directives
 ndDirs.scriptSrc.push(
   "'unsafe-eval'",
   "'unsafe-inline'",
@@ -69,12 +69,20 @@ ndDirs.scriptSrc.push(
 ndDirs.connectSrc.push('https://www.google-analytics.com')
 ndDirs.imgSrc.push('http://www.google-analytics.com', 'https://ssl.google-analytics.com')
 
+const DEVELOPER_DEPRECATED_OPTIONS = structuredClone(DEFAULT_OPTIONS)
+const devDirs = DEVELOPER_DEPRECATED_OPTIONS.contentSecurityPolicy.directives
+devDirs.styleSrc.push('*.googleapis.com')
+devDirs.scriptSrc.push("'unsafe-inline'", '*.googleapis.com', 'http://www.google-analytics.com')
+devDirs.fontSrc.push('*.gstatic.com')
+devDirs.scriptSrcAttr.push("'unsafe-inline'")
+
 const STATIC_DEPRECATED_OPTIONS = structuredClone(DEFAULT_OPTIONS)
 STATIC_DEPRECATED_OPTIONS.contentSecurityPolicy.directives.scriptSrc.push("'unsafe-inline'")
 
 const defaultHelmet = helmet(DEFAULT_OPTIONS)
 const nodeDeprecatedHelmet = helmet(NODE_DEPRECATED_OPTIONS)
 const staticDeprecatedHelmet = helmet(STATIC_DEPRECATED_OPTIONS)
+const developerDeprecatedHelmet = helmet(DEVELOPER_DEPRECATED_OPTIONS)
 
 export default function helmetMiddleware(req: Request, res: Response, next: NextFunction) {
   // Enable CORS
@@ -84,6 +92,14 @@ export default function helmetMiddleware(req: Request, res: Response, next: Next
 
   // Determine version for exceptions
   const { requestedVersion } = isArchivedVersion(req)
+
+  // Check if this is a legacy developer.github.com path
+  const isDeveloper = req.path
+    .replace(languagePrefixPathRegex, '/')
+    .startsWith(`/enterprise/${requestedVersion}/developer`)
+  if (versionSatisfiesRange(requestedVersion, '<=2.18') && isDeveloper) {
+    return developerDeprecatedHelmet(req, res, next)
+  }
 
   // Exception for deprecated Enterprise docs (Node.js era)
   if (

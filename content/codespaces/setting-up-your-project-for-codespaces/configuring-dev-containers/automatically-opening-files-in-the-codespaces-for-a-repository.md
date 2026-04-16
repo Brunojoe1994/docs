@@ -1,17 +1,16 @@
 ---
 title: Automatically opening files in the codespaces for a repository
 shortTitle: Automatically opening files
-intro: 'You can set particular files to be opened automatically whenever someone creates a codespace for your repository and opens the codespace in the {% data variables.product.prodname_vscode %} web client.'
+intro: You can set particular files to be opened automatically whenever someone creates a codespace for your repository and opens the codespace in the {% data variables.product.prodname_vscode %} web client.
 permissions: People with write permissions to a repository can create or edit the codespace configuration.
 versions:
   fpt: '*'
   ghec: '*'
-type: how_to
-topics:
-  - Codespaces
-  - Set up
 redirect_from:
   - /codespaces/setting-up-your-project-for-codespaces/automatically-opening-files-in-the-codespaces-for-a-repository
+contentType: how-tos
+category:
+  - Set up dev containers for a project
 ---
 
 ## Overview
@@ -20,11 +19,8 @@ If there's a particular file that's useful for people to see when they create a 
 
 The file, or files, you specify are only opened the first time a codespace is opened in the web client. If the person closes the specified files, those files are not automatically reopened the next time that person opens or restarts the codespace.
 
-{% note %}
-
-**Note**: This automation only applies to the {% data variables.product.prodname_vscode_shortname %} web client, not to the {% data variables.product.prodname_vscode_shortname %} desktop application, or other supported editors.
-
-{% endnote %}
+> [!NOTE]
+> This automation only applies to the {% data variables.product.prodname_vscode_shortname %} web client, not to the {% data variables.product.prodname_vscode_shortname %} desktop application, or other supported editors.
 
 ## Setting files to be opened automatically
 
@@ -49,4 +45,4 @@ The file, or files, you specify are only opened the first time a codespace is op
 
 ## Further reading
 
-* "[AUTOTITLE](/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers)"
+* [AUTOTITLE](/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers)

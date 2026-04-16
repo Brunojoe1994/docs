@@ -1,16 +1,15 @@
 ---
 title: '{% data variables.product.prodname_project_v1_caps %} permissions for an organization'
-intro: 'Organization owners and people with {% data variables.projects.projects_v1_board %} admin permissions can customize who has read, write, and admin permissions to your organization’s {% data variables.projects.projects_v1_boards %}.'
+intro: "Organization owners and people with {% data variables.projects.projects_v1_board %} admin permissions can customize who has read, write, and admin permissions to your organization's {% data variables.projects.projects_v1_boards %}."
 redirect_from:
   - /articles/project-board-permissions-for-an-organization
   - /github/setting-up-and-managing-organizations-and-teams/project-board-permissions-for-an-organization
 versions:
   feature: projects-v1
-topics:
-  - Organizations
-  - Teams
 shortTitle: '{% data variables.product.prodname_project_v1_caps %} permissions'
 allowTitleToDifferFromFilename: true
+category:
+  - Manage projects
 ---
 
 {% data reusables.projects.project_boards_old %}
@@ -25,8 +24,8 @@ Organization owners and people with admin permissions can give a person access t
 
 Organization owners and people with admin permissions to a {% data variables.projects.projects_v1_board %} can also:
 * Set default {% data variables.projects.projects_v1_board %} permissions for all organization members.
-* Manage access to the {% data variables.projects.projects_v1_board %} for organization members, teams, and outside collaborators. For more information, see "[AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-team-access-to-an-organization-project-board)", "[AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-an-individuals-access-to-an-organization-project-board)", or "[AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-access-to-a-project-board-for-organization-members)."
-* Manage {% data variables.projects.projects_v1_board %} visibility. For more information, see "[AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-access-to-a-project-board-for-organization-members)."
+* Manage access to the {% data variables.projects.projects_v1_board %} for organization members, teams, and outside collaborators. For more information, see [AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-team-access-to-an-organization-project-board), [AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-an-individuals-access-to-an-organization-project-board), or [AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-access-to-a-project-board-for-organization-members).
+* Manage {% data variables.projects.projects_v1_board %} visibility. For more information, see [AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-access-to-a-project-board-for-organization-members).
 
 ## Cascading permissions for {% data variables.projects.projects_v1_boards %}
 
@@ -36,13 +35,13 @@ For example, if an organization owner has given all organization members read pe
 
 ## {% data variables.projects.projects_v1_board_caps %} visibility
 
-{% ifversion classic-project-visibility-permissions %}{% data reusables.projects.owners-can-limit-visibility-permissions %}{% endif %}
+{% data reusables.projects.owners-can-limit-visibility-permissions %}
 
-{% data reusables.project-management.project-board-visibility %} You can change the {% data variables.projects.projects_v1_board %}'s visibility from private to public and back again. For more information, see "[AUTOTITLE](/issues/organizing-your-work-with-project-boards/managing-project-boards/changing-project-board-visibility)."
+{% data reusables.project-management.project-board-visibility %} You can change the {% data variables.projects.projects_v1_board %}'s visibility from private to public and back again. For more information, see [AUTOTITLE](/issues/organizing-your-work-with-project-boards/managing-project-boards/changing-project-board-visibility).
 
 ## Further reading
 
-* "[AUTOTITLE](/issues/organizing-your-work-with-project-boards/managing-project-boards/changing-project-board-visibility)"
-* "[AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-an-individuals-access-to-an-organization-project-board)"
-* "[AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-team-access-to-an-organization-project-board)"
-* "[AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-access-to-a-project-board-for-organization-members)"
+* [AUTOTITLE](/issues/organizing-your-work-with-project-boards/managing-project-boards/changing-project-board-visibility)
+* [AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-an-individuals-access-to-an-organization-project-board)
+* [AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-team-access-to-an-organization-project-board)
+* [AUTOTITLE](/organizations/managing-access-to-your-organizations-project-boards/managing-access-to-a-project-board-for-organization-members)

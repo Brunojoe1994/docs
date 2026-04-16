@@ -1,1 +1,0 @@
-> [!NOTE] The ability to change the AI model used by {% data variables.product.prodname_copilot_chat_short %} is in {% data variables.release-phases.public_preview %} and subject to change. To request access, join the [waitlist](https://github.com/o1-waitlist-signup).

@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest'
 import sharp from 'sharp'
 
-import { SURROGATE_ENUMS } from '@/frame/middleware/set-fastly-surrogate-key.js'
-import { get, getDOM } from '@/tests/helpers/e2etest.js'
+import { SURROGATE_ENUMS } from '@/frame/middleware/set-fastly-surrogate-key'
+import { get, getDOM } from '@/tests/helpers/e2etest'
 
 type Manifest = {
   name: string
@@ -20,6 +20,9 @@ describe('manifest', () => {
   test('download manifest from HTML and check content', async () => {
     const $ = await getDOM('/')
     const url = $('link[rel="manifest"]').attr('href')
+    if (!url) {
+      throw new Error('No manifest URL found')
+    }
     const res = await get(url)
     expect(res.statusCode).toBe(200)
 
@@ -39,11 +42,11 @@ describe('manifest', () => {
     expect(manifest.icons.length).toBeGreaterThan(0)
     await Promise.all(
       manifest.icons.map(async (icon) => {
-        const res = await get(icon.src, { responseType: 'buffer' })
-        expect(res.statusCode).toBe(200)
-        expect(res.headers['content-type']).toBe(icon.type)
+        const iconRes = await get(icon.src, { responseType: 'buffer' })
+        expect(iconRes.statusCode).toBe(200)
+        expect(iconRes.headers['content-type']).toBe(icon.type)
         // The `sizes` should match the payload
-        const image = sharp(res.body)
+        const image = sharp(iconRes.body)
         const [width, height] = icon.sizes.split('x').map((s) => parseInt(s))
         const dimensions = await image.metadata()
         expect(dimensions.width).toBe(width)

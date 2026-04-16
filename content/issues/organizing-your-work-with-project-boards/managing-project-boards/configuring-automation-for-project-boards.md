@@ -1,34 +1,28 @@
 ---
-title: 'Configuring automation for {% data variables.product.prodname_projects_v1 %}'
-intro: 'You can set up automatic workflows to move issues and pull requests to a {% data variables.projects.projects_v1_board %} column when a specified event occurs.'
+title: Configuring automation for {% data variables.product.prodname_projects_v1 %}
+intro: You can set up automatic workflows to move issues and pull requests to a {% data variables.projects.projects_v1_board %} column when a specified event occurs.
 redirect_from:
   - /github/managing-your-work-on-github/managing-project-boards/configuring-automation-for-project-boards
   - /articles/configuring-automation-for-project-boards
   - /github/managing-your-work-on-github/configuring-automation-for-project-boards
 versions:
   feature: projects-v1
-topics:
-  - Pull requests
-  - Projects
-  - Issues
-  - Project management
 shortTitle: Configure automation
-type: how_to
 allowTitleToDifferFromFilename: true
+contentType: how-tos
+category:
+  - Use project boards (classic)
 ---
 {% data reusables.projects.project_boards_old %}
 
-{% data reusables.project-management.automate-project-board-permissions %} For more information, see "[AUTOTITLE](/issues/organizing-your-work-with-project-boards/managing-project-boards/about-automation-for-project-boards)."
+{% data reusables.project-management.automate-project-board-permissions %} For more information, see [AUTOTITLE](/issues/organizing-your-work-with-project-boards/managing-project-boards/about-automation-for-project-boards).
 
 {% data reusables.project-management.use-automated-template %}
 
 {% data reusables.project-management.resync-automation %}
 
-{% tip %}
-
-**Tip**: To edit columns that already have configured automation, click **Manage** at the bottom of the column.
-
-{% endtip %}
+> [!TIP]
+> To edit columns that already have configured automation, click **Manage** at the bottom of the column.
 
 1. Navigate to the {% data variables.projects.projects_v1_board %} you want to automate.
 1. In the column you want to automate, click {% octicon "kebab-horizontal" aria-label="Column menu" %}.
@@ -40,4 +34,4 @@ allowTitleToDifferFromFilename: true
 
 ## Further reading
 
-* "[AUTOTITLE](/issues/organizing-your-work-with-project-boards/managing-project-boards/about-automation-for-project-boards)"
+* [AUTOTITLE](/issues/organizing-your-work-with-project-boards/managing-project-boards/about-automation-for-project-boards)

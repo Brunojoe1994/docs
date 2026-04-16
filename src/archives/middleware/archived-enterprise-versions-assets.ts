@@ -1,27 +1,19 @@
-import path from 'path'
-
-import got from 'got'
+import { fetchWithRetry } from '@/frame/lib/fetch-utils'
 import type { Response, NextFunction } from 'express'
 
-import patterns from '@/frame/lib/patterns.js'
-import { isArchivedVersion } from '@/archives/lib/is-archived-version.js'
-import {
-  setFastlySurrogateKey,
-  SURROGATE_ENUMS,
-} from '@/frame/middleware/set-fastly-surrogate-key.js'
-import { archivedCacheControl, defaultCacheControl } from '@/frame/middleware/cache-control.js'
+import patterns from '@/frame/lib/patterns'
+import { isArchivedVersion } from '@/archives/lib/is-archived-version'
+import { setFastlySurrogateKey, SURROGATE_ENUMS } from '@/frame/middleware/set-fastly-surrogate-key'
+import { archivedCacheControl, defaultCacheControl } from '@/frame/middleware/cache-control'
 import type { ExtendedRequest } from '@/types'
+import { createLogger } from '@/observability/logger'
+
+const logger = createLogger(import.meta.url)
 
 // This module handles requests for the CSS and JS assets for
 // deprecated GitHub Enterprise versions by routing them to static content in
-// help-docs-archived-enterprise-versions
-//
-// Note that as of GHES 3.2, we no longer store assets for deprecated versions
-// in help-docs-archived-enterprise-versions. Instead, we store them in the
-// Azure blob storage `githubdocs` in the `enterprise` container. All HTML files
-// have been updated to use references to this blob storage for all assets.
-//
-// See also ./archived-enterprise-versions.js for non-CSS/JS paths
+// one of the docs-ghes-<release number> repos.
+// See also ./archived-enterprise-versions.ts for non-CSS/JS paths
 
 export default async function archivedEnterpriseVersionsAssets(
   req: ExtendedRequest,
@@ -33,12 +25,13 @@ export default async function archivedEnterpriseVersionsAssets(
   // or /_next/static/foo.css
   if (!patterns.assetPaths.test(req.path)) return next()
 
-  // We now know the URL is either /enterprise/2.22/_next/static/foo.css
-  // or the regular /_next/static/foo.css. But we're only going to
-  // bother looking it up on https://github.github.com/help-docs-archived-enterprise-versions
-  // if the URL has the enterprise bit in it, or if the path was
-  // /_next/static/foo.css *and* its Referrer had the enterprise
-  // bit in it.
+  // The URL is either in the format
+  // /enterprise/2.22/_next/static/foo.css,
+  // /enterprise-server@<release>,
+  // or /_next/static/foo.css.
+  // If the URL is prefixed with the enterprise version and release number
+  // or if the Referrer contains the enterprise version and release number,
+  // then we'll fetch it from the docs-ghes-<release number> repo.
   if (
     !(
       patterns.getEnterpriseVersionNumber.test(req.path) ||
@@ -59,12 +52,33 @@ export default async function archivedEnterpriseVersionsAssets(
   const { isArchived, requestedVersion } = isArchivedVersion(req)
   if (!isArchived || !requestedVersion) return next()
 
-  const assetPath = req.path.replace(`/enterprise/${requestedVersion}`, '')
+  // If this looks like a Next.js chunk or build manifest request from an archived page,
+  // just return 204 No Content instead of trying to proxy it.
+  // This suppresses noise from hydration requests that don't affect
+  // content viewing since archived pages render fine server-side.
+  // Only target specific problematic asset types, not all _next/static assets.
+  if (
+    (req.path.includes('/_next/static/chunks/') ||
+      req.path.includes('/_buildManifest.js') ||
+      req.path.includes('/_ssgManifest.js')) &&
+    (req.get('referrer') || '').match(/enterprise(-server@|\/)[\d.]+/)
+  ) {
+    archivedCacheControl(res)
+    setFastlySurrogateKey(res, SURROGATE_ENUMS.MANUAL)
+    return res.sendStatus(204) // No Content - silently ignore
+  }
+
+  // In all of the `docs-ghes-<relase number` repos, the asset directories
+  // are at the root. This removes the version and release number from the
+  // asset path so that we can proxy the request to the correct location.
+  const newEnterprisePrefix = `/enterprise-server@${requestedVersion}`
+  const legacyEnterprisePrefix = `/enterprise/${requestedVersion}`
+  const assetPath = req.path.replace(newEnterprisePrefix, '').replace(legacyEnterprisePrefix, '')
 
   // Just to be absolutely certain that the path can not contain
   // a URL that might trip up the GET we're about to make.
   if (
-    assetPath.includes('..') ||
+    assetPath.includes('../') ||
     assetPath.includes('://') ||
     (assetPath.includes(':') && assetPath.includes('@'))
   ) {
@@ -72,15 +86,33 @@ export default async function archivedEnterpriseVersionsAssets(
     return res.status(404).type('text/plain').send('Asset path not valid')
   }
 
-  const proxyPath = path.join('/', requestedVersion, assetPath)
-
+  const proxyPath = `https://github.github.com/docs-ghes-${requestedVersion}${assetPath}`
   try {
-    const r = await got(
-      `https://github.github.com/help-docs-archived-enterprise-versions${proxyPath}`,
+    const r = await fetchWithRetry(
+      proxyPath,
+      {},
+      {
+        retries: 0,
+        throwHttpErrors: true,
+      },
     )
+
+    const body = await r.arrayBuffer()
+
     res.set('accept-ranges', 'bytes')
-    res.set('content-type', r.headers['content-type'])
-    res.set('content-length', r.headers['content-length'])
+    const contentType = r.headers.get('content-type')
+    if (contentType) {
+      // Match got's behavior by adding charset=utf-8 to SVG files
+      if (contentType === 'image/svg+xml') {
+        res.set('content-type', `${contentType}; charset=utf-8`)
+      } else {
+        res.set('content-type', contentType)
+      }
+    }
+    const contentLength = r.headers.get('content-length')
+    if (contentLength) {
+      res.set('content-length', contentLength)
+    }
     res.set('x-is-archived', 'true')
     res.set('x-robots-tag', 'noindex')
 
@@ -89,7 +121,7 @@ export default async function archivedEnterpriseVersionsAssets(
     archivedCacheControl(res)
     setFastlySurrogateKey(res, SURROGATE_ENUMS.MANUAL)
 
-    return res.send(r.body)
+    return res.send(Buffer.from(body))
   } catch (err) {
     // Primarily for the developers working on tests that mock
     // requests. If you don't set up `nock` correctly, you might
@@ -97,6 +129,11 @@ export default async function archivedEnterpriseVersionsAssets(
     if (err instanceof Error && err.toString().includes('Nock: No match for request')) {
       throw err
     }
+
+    logger.warn('Failed to proxy archived enterprise asset', {
+      url: proxyPath,
+      error: err instanceof Error ? err : new Error(String(err)),
+    })
 
     // It's important that we don't give up on this by returning a 404
     // here. It's better to let this through in case the asset exists

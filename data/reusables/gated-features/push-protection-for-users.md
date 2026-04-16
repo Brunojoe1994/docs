@@ -1,1 +1,1 @@
-Push protection for users is on by default and can be disabled in your personal account settings.
+Push protection for users is on by default for public repositories

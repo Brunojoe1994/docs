@@ -1,6 +1,6 @@
 ---
 title: Working with forks
-intro: 'Forks are often used in open source development on {% data variables.product.product_name %}.'
+intro: 'Forks are often used in open source development on {% data variables.product.github %}.'
 redirect_from:
   - /github/collaborating-with-issues-and-pull-requests/working-with-forks
   - /articles/working-with-forks
@@ -9,8 +9,6 @@ versions:
   fpt: '*'
   ghes: '*'
   ghec: '*'
-topics:
-  - Pull requests
 children:
   - /about-forks
   - /fork-a-repo

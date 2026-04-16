@@ -8,6 +8,8 @@ redirect_from:
   - /education/manage-coursework-with-github-classroom/student-experience-replit
   - /education/manage-coursework-with-github-classroom/about-using-replit-with-github-classroom
   - /education/manage-coursework-with-github-classroom/integrate-github-classroom-with-an-ide/about-using-replit-with-github-classroom
+category:
+  - Integrate GitHub Classroom with an IDE
 ---
 ## What’s changing with Repl.it integration
 
@@ -26,4 +28,4 @@ We know cloud IDE integrations are important to your classroom and are working h
 
 ## Further reading
 
-* "[AUTOTITLE](/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes)"
+* [AUTOTITLE](/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes)

@@ -1,6 +1,6 @@
 ---
 title: Enforcing policies for projects in your enterprise
-intro: 'You can enforce policies for {% data variables.projects.projects_v2_and_v1 %} within your enterprise''s organizations, or allow policies to be set in each organization.'
+intro: You can enforce policies for {% data variables.projects.projects_v2_and_v1 %} within your enterprise's organizations, or allow policies to be set in each organization.
 permissions: Enterprise owners can enforce policies for projects in an enterprise.
 redirect_from:
   - /articles/enforcing-project-board-settings-for-organizations-in-your-business-account
@@ -14,12 +14,10 @@ redirect_from:
 versions:
   ghec: '*'
   ghes: '*'
-type: how_to
-topics:
-  - Enterprise
-  - Policies
-  - Projects
 shortTitle: Projects policies
+contentType: how-tos
+category:
+  - Secure and govern your enterprise
 ---
 
 ## About policies for projects in your enterprise
@@ -28,7 +26,7 @@ You can enforce policies to control how enterprise members manage {% data variab
 
 {% ifversion projects-v1 %}
 
-Some policies apply to both {% data variables.product.prodname_projects_v2 %}, the new projects experience, and {% data variables.product.prodname_projects_v1 %}, the previous experience, while some apply only to {% data variables.product.prodname_projects_v1 %}. For more information about each experience, see "[AUTOTITLE](/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects)" and "[AUTOTITLE](/issues/organizing-your-work-with-project-boards/managing-project-boards/about-project-boards)."
+Some policies apply to both {% data variables.product.prodname_projects_v2 %}, the new projects experience, and {% data variables.product.prodname_projects_v1 %}, the previous experience, while some apply only to {% data variables.product.prodname_projects_v1 %}. For more information about each experience, see [AUTOTITLE](/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects) and [AUTOTITLE](/issues/organizing-your-work-with-project-boards/managing-project-boards/about-project-boards).
 
 {% endif %}
 

@@ -1,22 +1,23 @@
 ---
-title: '{% data variables.product.product_name %}{% ifversion fpt or ghec%}.com{% endif %} Help Documentation'
+title: '{% data variables.product.github %}{% ifversion fpt or ghec %}.com{% endif %} Help Documentation'
 featuredLinks:
   gettingStarted:
-    - /get-started/getting-started-with-git/set-up-git
+    - /get-started/git-basics/set-up-git
     - /authentication/connecting-to-github-with-ssh
     - /repositories/creating-and-managing-repositories
     - /get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
   popular:
     - /pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
     - /authentication
-    - /copilot/using-github-copilot/getting-code-suggestions-in-your-ide-with-github-copilot
-    - /get-started/getting-started-with-git/managing-remote-repositories
+    - /copilot/how-tos/get-code-suggestions/get-ide-code-suggestions
+    - /get-started/git-basics/managing-remote-repositories
     - /pages
 redirect_from:
   - /github
   - /articles
   - /common-issues-and-questions
   - /troubleshooting-common-issues
+  - /video-transcripts
   - /early-access/github/enforcing-best-practices-with-github-policies
   - /github/enforcing-best-practices-with-github-policies/index
   - /early-access/github/enforcing-best-practices-with-github-policies/about-github-policies
@@ -51,7 +52,9 @@ versions:
 children:
   - search
   - get-started
+  - enterprise-onboarding
   - account-and-profile
+  - subscriptions-and-notifications
   - authentication
   - repositories
   - admin
@@ -64,6 +67,7 @@ children:
   - actions
   - copilot
   - codespaces
+  - integrations
   - migrations
   - packages
   - search-github
@@ -80,9 +84,10 @@ children:
   - desktop
   - early-access
   - support
-  - video-transcripts
+
   - contributing
   - github-models
+  - nonprofit
 childGroups:
   - name: Get started
     octicon: RocketIcon
@@ -90,6 +95,7 @@ childGroups:
       - get-started
       - migrations
       - account-and-profile
+      - subscriptions-and-notifications
       - authentication
       - billing
       - site-policy
@@ -100,26 +106,37 @@ childGroups:
       - repositories
       - pull-requests
       - discussions
+      - integrations
+  - name: GitHub Copilot
+    octicon: CopilotIcon
+    children:
       - copilot
+      - copilot/get-started/plans
+      - copilot/how-tos/use-copilot-agents/cloud-agent
+      - copilot/tutorials
+      - copilot/tutorials/copilot-chat-cookbook
+      - copilot/tutorials/customization-library
+      - copilot/how-tos/copilot-cli
   - name: CI/CD and DevOps
     octicon: GearIcon
     children:
       - actions
       - packages
       - pages
-  - name: Security
+  - name: Security and code quality
     octicon: ShieldLockIcon
     children:
       - code-security
-      - code-security/supply-chain-security
-      - code-security/security-advisories
-      - code-security/dependabot
-      - code-security/code-scanning
-      - code-security/secret-scanning
+      - code-security/how-tos/secure-your-secrets
+      - code-security/how-tos/find-and-fix-code-vulnerabilities
+      - code-security/how-tos/secure-your-supply-chain
+      - code-security/how-tos/maintain-quality-code
+      - code-security/how-tos/secure-at-scale
   - name: Client apps
     octicon: DeviceMobileIcon
     children:
       - github-cli
+      - get-started/using-github/github-mobile
       - desktop
   - name: Project management
     octicon: ProjectIcon
@@ -127,6 +144,13 @@ childGroups:
       - issues
       - issues/planning-and-tracking-with-projects
       - search-github
+  - name: Enterprise and teams
+    octicon: OrganizationIcon
+    children:
+      - organizations
+      - code-security/how-tos/secure-at-scale
+      - enterprise-onboarding
+      - admin
   - name: Developers
     octicon: CodeSquareIcon
     children:
@@ -135,25 +159,22 @@ childGroups:
       - graphql
       - webhooks
       - github-models
-  - name: Enterprise and Teams
-    octicon: OrganizationIcon
-    children:
-      - organizations
-      - admin
   - name: Community
     octicon: GlobeIcon
     children:
       - communities
       - sponsors
       - education
+      - nonprofit
       - support
       - contributing
   - name: More docs
     octicon: PencilIcon
     children:
-      - electron
       - codeql
+      - electron
       - npm
+      - gh-wa
 externalProducts:
   electron:
     id: electron
@@ -162,12 +183,17 @@ externalProducts:
     external: true
   codeql:
     id: codeql
-    name: CodeQL
+    name: CodeQL query writing
     href: 'https://codeql.github.com/docs'
     external: true
   npm:
     id: npm
     name: npm
     href: 'https://docs.npmjs.com/'
+    external: true
+  gh-wa:
+    id: gh-wa
+    name: GitHub Well-Architected
+    href: 'https://wellarchitected.github.com/'
     external: true
 ---

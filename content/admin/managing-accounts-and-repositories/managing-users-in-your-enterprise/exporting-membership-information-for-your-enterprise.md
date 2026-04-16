@@ -3,12 +3,12 @@ title: Exporting membership information for your enterprise
 intro: "You can export information about all of your enterprise's members from {% data variables.product.prodname_dotcom %}'s web UI."
 versions:
   feature: enterprise-member-csv
-topics:
-  - Enterprise
 shortTitle: Export membership information
 permissions: Enterprise owners can export membership information for an enterprise.
 redirect_from:
   - /admin/user-management/managing-users-in-your-enterprise/exporting-membership-information-for-your-enterprise
+category:
+  - Manage accounts and repositories
 ---
 
 ## About export of membership information
@@ -17,14 +17,8 @@ You can export aggregated information about your enterprise's members as a membe
 
 The membership information report includes the following information.
 
-{% note %}
-
-**Note:** You can only export the datetime of the user's last activity at the organization level. For more information, see "[AUTOTITLE](/organizations/managing-membership-in-your-organization/exporting-member-information-for-your-organization#about-export-of-membership-information)."
-
-{% endnote %}
-
 * Username and display name details
-* Whether the user has two-factor authentication enabled {% ifversion mandatory-2fa-required-overview %}or is required to enable it{% endif %}
+* Whether the user has two-factor authentication enabled and how secure their 2FA configuration is
 * Whether the user is an organization owner or member
 * Organizations with pending invitations
 * Optionally, additional information that depends on the enterprise's configuration:
@@ -35,7 +29,9 @@ The membership information report includes the following information.
 
 You can also use {% data variables.product.prodname_dotcom %}'s APIs to retrieve information about your enterprise's members. For more information, see the [GraphQL API](/graphql/reference/objects#user) and [REST API](/rest/users) documentation.
 
-Organization owners can also export membership information for an organization. For more information, see "[AUTOTITLE](/organizations/managing-membership-in-your-organization/exporting-member-information-for-your-organization)."
+Organization owners can also export membership information for an organization. For more information, see [AUTOTITLE](/organizations/managing-membership-in-your-organization/exporting-member-information-for-your-organization).
+
+The membership information report includes everyone associated with the enterprise, regardless of whether they consume a license. This report is useful for reviewing current enterprise membership, permissions, and roles for all individuals currently associated with the enterprise. For information about current and billable licenses, see [AUTOTITLE](/billing/managing-your-license-for-github-enterprise/viewing-license-usage-for-github-enterprise).
 
 ## Exporting a membership information report
 
@@ -43,7 +39,7 @@ You can download a CSV file containing the membership information report for you
 
 {% data reusables.enterprise-accounts.access-enterprise %}
 {% data reusables.enterprise-accounts.people-tab %}
-1. To the right of "Members", click **{% octicon "download" aria-hidden="true" %} CSV Report**.
+1. To the right of "Members", click **{% octicon "download" aria-hidden="true" aria-label="download" %} CSV Report**.
 
    * If your enterprise has less than 1,000 members, the report will download immediately.
    * If your enterprise has 1,000 or more members, you'll soon receive an email with a link to download the report.

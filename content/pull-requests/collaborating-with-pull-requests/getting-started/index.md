@@ -10,13 +10,8 @@ versions:
   fpt: '*'
   ghes: '*'
   ghec: '*'
-topics:
-  - Pull requests
-  - Issues
-  - Discussions
-  - Fundamentals
 children:
   - /about-collaborative-development-models
-  - /best-practices-for-pull-requests
+  - /helping-others-review-your-changes
+  - /managing-and-standardizing-pull-requests
 ---
-

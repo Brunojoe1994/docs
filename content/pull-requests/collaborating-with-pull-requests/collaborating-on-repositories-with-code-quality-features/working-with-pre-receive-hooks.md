@@ -9,6 +9,8 @@ redirect_from:
 versions:
   ghes: '*'
 shortTitle: Pre-receive hooks
+category:
+  - Merge and close pull requests
 ---
 Pre-receive hooks run tests on code pushed to a repository to ensure contributions meet repository or organization policy. If the commit contents pass the tests, the push will be accepted into the repository. If the commit contents do not pass the tests, the push will not be accepted.
 
@@ -28,4 +30,4 @@ To https://54.204.174.51/hodor/nope.git
 error: failed to push some refs to 'https://54.204.174.51/hodor/nope.git'
 ```
 
-Your {% data variables.product.product_name %} site administrator can create and remove pre-receive hooks for your organization or repository, and may allow organization or repository administrators to enable or disable pre-receive hooks. For more information, see "[AUTOTITLE](/admin/policies/enforcing-policy-with-pre-receive-hooks)."
+Your {% data variables.product.prodname_ghe_server %} site administrator can create and remove pre-receive hooks for your organization or repository, and may allow organization or repository administrators to enable or disable pre-receive hooks. For more information, see [AUTOTITLE](/admin/policies/enforcing-policy-with-pre-receive-hooks).

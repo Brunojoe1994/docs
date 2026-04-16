@@ -9,17 +9,13 @@ redirect_from:
 versions:
   fpt: '*'
   ghec: '*'
-topics:
-  - Organizations
-  - Teams
 shortTitle: Unrestrict {% data variables.product.prodname_oauth_apps %}
+category:
+  - Manage app and API access
 ---
 
-{% danger %}
-
-**Warning**: When you disable {% data variables.product.prodname_oauth_app %} access restrictions for your organization, any organization member will automatically authorize {% data variables.product.prodname_oauth_app %} access to the organization's private resources when they approve an application for use in their personal account settings.
-
-{% enddanger %}
+> [!WARNING]
+> When you disable {% data variables.product.prodname_oauth_app %} access restrictions for your organization, any organization member will automatically authorize {% data variables.product.prodname_oauth_app %} access to the organization's private resources when they approve an application for use in their personal account settings.
 
 {% data reusables.profile.access_org %}
 {% data reusables.profile.org_settings %}

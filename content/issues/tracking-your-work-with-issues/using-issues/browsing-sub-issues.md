@@ -1,14 +1,12 @@
 ---
 title: Browsing sub-issues
-intro: 'Learn how to navigate issue hierarchy in your repositories.'
+intro: Learn how to navigate issue hierarchy in your repositories.
 versions:
-  feature: 'sub-issues'
-type: overview
-topics:
-  - Project management
+  feature: sub-issues
+contentType: concepts
+category:
+  - Create and work with issues
 ---
-
-{% data reusables.issues.release-stage %}
 
 {% data reusables.issues.about-sub-issues %}
 
@@ -17,7 +15,7 @@ topics:
 You can browse through all levels of sub-issues from the parent issue.
 
 1. Navigate to the parent issue.
-1. To view the sub-issues under another sub-issue, click the expand toggle ({% octicon "triangle-right" aria-hidden="true" %}).
+1. To view the sub-issues under another sub-issue, click the expand toggle ({% octicon "triangle-right" aria-hidden="true" aria-label="triangle-right" %}).
 
    ![Screenshot of a sub-issues section. The expand toggle is highlighted with an orange rectangle.](/assets/images/help/issues/sub-issue-expand.png)
 
@@ -29,4 +27,4 @@ When you view a sub-issue, you can always find a link back to the parent issue i
 
 ## Using sub-issues in your projects
 
-You can add sub-issues to your projects and make use of the hierarchy data for building views, grouping items, and filtering your views. See "[AUTOTITLE](/issues/planning-and-tracking-with-projects/understanding-fields/about-parent-issue-and-sub-issue-progress-fields)."
+You can add sub-issues to your projects and make use of the hierarchy data for building views, grouping items, and filtering your views. See [AUTOTITLE](/issues/planning-and-tracking-with-projects/understanding-fields/about-parent-issue-and-sub-issue-progress-fields).

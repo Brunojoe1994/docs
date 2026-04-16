@@ -10,14 +10,12 @@ versions:
   fpt: '*'
   ghes: '*'
   ghec: '*'
-topics:
-  - Pull requests
+category:
+  - Merge and close pull requests
 ---
-{% tip %}
 
-**Tip**: If you opened a pull request with the wrong base branch, rather than closing it out and opening a new one, you can instead change the base branch. For more information, see "[AUTOTITLE](/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/changing-the-base-branch-of-a-pull-request)."
-
-{% endtip %}
+> [!TIP]
+> If you opened a pull request with the wrong base branch, rather than closing it out and opening a new one, you can instead change the base branch. For more information, see [AUTOTITLE](/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/changing-the-base-branch-of-a-pull-request).
 
 {% data reusables.repositories.sidebar-pr %}
 1. In the "Pull Requests" list, click the pull request you'd like to close.

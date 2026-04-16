@@ -5,9 +5,8 @@ redirect_from:
   - /github/site-policy/github-acceptable-use-policies
 versions:
   fpt: '*'
-topics:
-  - Policy
-  - Legal
+category:
+  - Follow acceptable use policies
 ---
 
 **Short version:** _We host a wide variety of collaborative projects from all over the world, and that collaboration only works when our users are able to work together in good faith. While using the Service, you must comply with our Acceptable Use Policies, which include some restrictions on content and conduct on GitHub related to user safety, intellectual property, privacy, authenticity, and other limitations. In short, be excellent to each other._
@@ -21,6 +20,8 @@ You are responsible for using the Service in compliance with all applicable laws
 ## 2. User Safety
 
 We do not allow content or activity on GitHub that:
+
+<!-- markdownlint-disable GHD034 -->
 
 * is unlawful or promotes unlawful activities;
 
@@ -74,6 +75,8 @@ We do not allow content or activity on GitHub that:
 * directly supports [unlawful active attack or malware campaigns](/site-policy/acceptable-use-policies/github-active-malware-or-exploits) that are causing technical harms — such as using our platform to deliver malicious executables or as attack infrastructure, for example by organizing denial of service attacks or managing command and control servers — with no implicit or explicit dual-use purpose prior to the abuse occurring; or
 * uses our servers to disrupt or to attempt to disrupt, or to gain or to attempt to gain unauthorized access to, any service, device, data, account or network. Please note, activities permitted under bug bounty programs, such as the [GitHub Bug Bounty program](https://bounty.github.com), are not considered “unauthorized,” but must only affect the organization whose bug bounty program authorized the activity.
 
+<!-- markdownlint-enable GHD034 -->
+
 ## 6. Services Usage Limits
 
 You will not reproduce, duplicate, copy, sell, resell or exploit any portion of the Service, use of the Service, or access to the Service without our express written permission.
@@ -99,7 +102,7 @@ Any person, entity, or service collecting data from the Service must comply with
 
 ## 9. Excessive Bandwidth Use
 
-The Service's bandwidth limitations vary based on the features you use. If we determine your bandwidth usage to be significantly excessive in relation to other users of similar features, we reserve the right to suspend your Account, throttle your file hosting, or otherwise limit your activity until you can reduce your bandwidth consumption. We also reserve the right—after providing advance notice—to delete repositories that we determine to be placing undue strain on our infrastructure. For guidance on acceptable use of object storage in repositories, refer to "[AUTOTITLE](/repositories/working-with-files/managing-large-files/about-large-files-on-github)". For more details on specific features' bandwidth limitations, see the [GitHub Additional Product Terms](/site-policy/github-terms/github-terms-for-additional-products-and-features).
+The Service's bandwidth limitations vary based on the features you use. If we determine your bandwidth usage to be significantly excessive in relation to other users of similar features, we reserve the right to suspend your Account, throttle your file hosting, or otherwise limit your activity until you can reduce your bandwidth consumption. We also reserve the right—after providing advance notice—to delete repositories that we determine to be placing undue strain on our infrastructure. For guidance on acceptable use of object storage in repositories, refer to [AUTOTITLE](/repositories/working-with-files/managing-large-files/about-large-files-on-github). For more details on specific features' bandwidth limitations, see the [GitHub Additional Product Terms](/site-policy/github-terms/github-terms-for-additional-products-and-features).
 
 ## 10. Advertising on GitHub
 
@@ -113,6 +116,7 @@ If you decide to post any promotional materials in your Account, you are solely 
 
 ## 11. User Protection
 
+<!-- localization update 2026-03-11 - Feedback 1131974 -->
 You must not engage in activity that significantly harms other users.
 
 We will interpret our policies and resolve disputes in favor of protecting users as a whole.

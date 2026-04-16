@@ -13,21 +13,36 @@ redirect_from:
   - /admin/configuration/configuring-network-settings/configuring-time-synchronization
 versions:
   ghes: '*'
-type: how_to
-topics:
-  - Enterprise
-  - Fundamentals
-  - Infrastructure
-  - Networking
 shortTitle: Configure time settings
+contentType: how-tos
+category:
+  - Install and configure your instance
 ---
+
+## Default NTP servers
+
+We recommend configuring your own preferred NTP servers. The default NTP server values on GitHub Enterprise Server are the following:
+
+{% ifversion ghes > 3.17 %}
+AWS
+* Primary Server: 169.254.169.123 prefer iburst minpoll 4 maxpoll 4
+* NTP Pool: time.aws.com iburst
+
+Other (non-AWS)
+{% endif %}
+* Primary Server: 0.github.pool.ntp.org
+* Secondary Server: 1.github.pool.ntp.org
+
+You must ensure that the NTP servers (configured or default) are reachable on UDP port 123. For more details on the network ports that need to be open, see [AUTOTITLE](/admin/configuring-settings/configuring-network-settings/network-ports#administrative-ports).
+
 ## Changing the default NTP servers
 
 {% data reusables.enterprise_site_admin_settings.access-settings %}
 {% data reusables.enterprise_site_admin_settings.management-console %}
 1. In the "Settings" sidebar, click **Time**.
-1. Under "Primary NTP server," type the hostname of the primary NTP server.
-1. Under "Secondary NTP server," type the hostname of the secondary NTP server.
+1. Under "Primary NTP server", type the hostname of the primary NTP server.
+1. Under "Secondary NTP server (optional)", type the hostname of the secondary NTP server.{% ifversion ghes > 3.17 %}
+1. Under "NTP pool (optional)", type the NTP pool.{% endif %}
 1. Under the "Settings" sidebar, click **Save settings**.
 1. Wait for the configuration run to complete.
 
@@ -35,13 +50,9 @@ shortTitle: Configure time settings
 
 The NTP protocol continuously corrects small time synchronization discrepancies. You can use the administrative shell to synchronize time immediately.
 
-{% note %}
-
-**Notes:**
-* You can't modify the Coordinated Universal Time (UTC) zone.
-* You should prevent your hypervisor from trying to set the virtual machine's clock. For more information, see the documentation provided by the virtualization provider.
-
-{% endnote %}
+> [!NOTE]
+> * You can't modify the Coordinated Universal Time (UTC) zone.
+> * You should prevent your hypervisor from trying to set the virtual machine's clock. For more information, see the documentation provided by the virtualization provider.
 
 * Use the `chronyc` command to synchronize the server with the configured NTP server. For example:
 

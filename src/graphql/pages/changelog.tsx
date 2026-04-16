@@ -1,14 +1,16 @@
 import { GetServerSideProps } from 'next'
+import type { ExtendedRequest } from '@/types'
+import type { ServerResponse } from 'http'
 
-import { MainContextT, MainContext, getMainContext } from 'src/frame/components/context/MainContext'
-import { AutomatedPage } from 'src/automated-pipelines/components/AutomatedPage'
+import { MainContextT, MainContext, getMainContext } from '@/frame/components/context/MainContext'
+import { AutomatedPage } from '@/automated-pipelines/components/AutomatedPage'
 import {
   AutomatedPageContext,
   AutomatedPageContextT,
   getAutomatedPageContextFromRequest,
-} from 'src/automated-pipelines/components/AutomatedPageContext'
-import { Changelog } from 'src/graphql/components/Changelog'
-import { ChangelogItemT } from 'src/graphql/components/types'
+} from '@/automated-pipelines/components/AutomatedPageContext'
+import { Changelog } from '@/graphql/components/Changelog'
+import { ChangelogItemT } from '@/graphql/components/types'
 
 type Props = {
   mainContext: MainContextT
@@ -28,11 +30,11 @@ export default function GraphqlChangelog({ mainContext, schema, automatedPageCon
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-  const { getGraphqlChangelog } = await import('src/graphql/lib/index.js')
-  const { getAutomatedPageMiniTocItems } = await import('src/frame/lib/get-mini-toc-items.js')
+  const { getGraphqlChangelog } = await import('@/graphql/lib/index')
+  const { getAutomatedPageMiniTocItems } = await import('@/frame/lib/get-mini-toc-items')
 
-  const req = context.req as any
-  const res = context.res as any
+  const req = context.req as unknown as ExtendedRequest
+  const res = context.res as unknown as ServerResponse
   const currentVersion = context.query.versionId as string
   const schema = getGraphqlChangelog(currentVersion) as ChangelogItemT[]
   if (!schema) throw new Error('No graphql free-pro-team changelog schema found.')
@@ -41,7 +43,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   // content/graphql/reference/*
   const automatedPageContext = getAutomatedPageContextFromRequest(req)
   const titles = schema.map((item) => `Schema changes for ${item.date}`)
-  const changelogMiniTocItems = await getAutomatedPageMiniTocItems(titles, req.context.context, 2)
+  const changelogMiniTocItems = await getAutomatedPageMiniTocItems(titles, req.context!, 2)
   // Update the existing context to include the miniTocItems from GraphQL
   automatedPageContext.miniTocItems.push(...changelogMiniTocItems)
 
@@ -56,16 +58,16 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   //    <li>Field filename was added to object type <code>IssueTemplate</code></li>
   //
   // ...without the additional <p>.
-  schema.forEach((item) => {
+  for (const item of schema) {
     for (const group of [item.schemaChanges, item.previewChanges, item.upcomingChanges]) {
-      group.forEach((change) => {
+      for (const change of group) {
         change.changes = change.changes.map((html) => {
           if (html.startsWith('<p>') && html.endsWith('</p>')) return html.slice(3, -4)
           return html
         })
-      })
+      }
     }
-  })
+  }
 
   return {
     props: {

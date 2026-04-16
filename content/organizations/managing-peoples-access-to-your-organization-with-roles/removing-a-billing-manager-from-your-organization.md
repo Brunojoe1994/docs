@@ -7,18 +7,13 @@ redirect_from:
 versions:
   fpt: '*'
   ghec: '*'
-topics:
-  - Organizations
-  - Teams
-  - Billing
 shortTitle: Remove billing manager
+category:
+  - Assign roles and permissions
 ---
 
-{% warning %}
-
-**Note:** {% data reusables.dotcom_billing.org-billing-perms %}
-
-{% endwarning %}
+> [!NOTE]
+> {% data reusables.dotcom_billing.org-billing-perms %}
 
 {% data reusables.organizations.billing-settings %}
 1. Under "Billing management", in the "Billing managers" list, next to the name of the person you want to remove, click **Remove**.

@@ -11,9 +11,8 @@ versions:
   fpt: '*'
   ghes: '*'
   ghec: '*'
-topics:
-  - Identity
-  - Access management
+category:
+  - Connect with SSH
 ---
 You can delete unauthorized (or possibly compromised) SSH keys to ensure that an attacker no longer has access to your repositories. You can also approve existing SSH keys that are valid.
 
@@ -23,11 +22,8 @@ You can delete unauthorized (or possibly compromised) SSH keys to ensure that an
 {% data reusables.user-settings.ssh %}
 1. Under "SSH keys", take note of the SSH keys associated with your account. For those that you don't recognize, or that are out-of-date, click **Delete**. If there are valid SSH keys you'd like to keep, click **Approve**.
 
-   {% note %}
-
-   **Note:** If you're auditing your SSH keys due to an unsuccessful Git operation, the unverified key that caused the [SSH key audit error](/articles/error-we-re-doing-an-ssh-key-audit) will be highlighted in the list of SSH keys.
-
-   {% endnote %}
+   > [!NOTE]
+   > If you're auditing your SSH keys due to an unsuccessful Git operation, the unverified key that caused the [SSH key audit error](/articles/error-we-re-doing-an-ssh-key-audit) will be highlighted in the list of SSH keys.
 
 1. Open Terminal.
 
@@ -40,7 +36,7 @@ You can delete unauthorized (or possibly compromised) SSH keys to ensure that an
    > 2048 SHA256:274ffWxgaxq/tSINAykStUL7XWyRNcRTlcST1Ei7gBQ /Users/USERNAME/.ssh/id_rsa (RSA)
    ```
 
-1. The SSH keys on {% data variables.product.product_name %} _should_ match the same keys on your computer.
+1. The SSH keys on {% data variables.product.github %} _should_ match the same keys on your computer.
 
 {% endmac %}
 
@@ -50,11 +46,8 @@ You can delete unauthorized (or possibly compromised) SSH keys to ensure that an
 {% data reusables.user-settings.ssh %}
 1. Under "SSH keys", take note of the SSH keys associated with your account. For those that you don't recognize, or that are out-of-date, click **Delete**. If there are valid SSH keys you'd like to keep, click **Approve**.
 
-   {% note %}
-
-   **Note:** If you're auditing your SSH keys due to an unsuccessful Git operation, the unverified key that caused the [SSH key audit error](/articles/error-we-re-doing-an-ssh-key-audit) will be highlighted in the list of SSH keys.
-
-   {% endnote %}
+   > [!NOTE]
+   > If you're auditing your SSH keys due to an unsuccessful Git operation, the unverified key that caused the [SSH key audit error](/articles/error-we-re-doing-an-ssh-key-audit) will be highlighted in the list of SSH keys.
 
 1. Open Git Bash.
 
@@ -71,7 +64,7 @@ You can delete unauthorized (or possibly compromised) SSH keys to ensure that an
    > 2048 SHA256:274ffWxgaxq/tSINAykStUL7XWyRNcRTlcST1Ei7gBQ /Users/USERNAME/.ssh/id_rsa (RSA)
    ```
 
-1. The SSH keys on {% data variables.product.product_name %} _should_ match the same keys on your computer.
+1. The SSH keys on {% data variables.product.github %} _should_ match the same keys on your computer.
 
 {% endwindows %}
 
@@ -81,11 +74,8 @@ You can delete unauthorized (or possibly compromised) SSH keys to ensure that an
 {% data reusables.user-settings.ssh %}
 1. Under "SSH keys", take note of the SSH keys associated with your account. For those that you don't recognize, or that are out-of-date, click **Delete**. If there are valid SSH keys you'd like to keep, click **Approve**.
 
-   {% note %}
-
-   **Note:** If you're auditing your SSH keys due to an unsuccessful Git operation, the unverified key that caused the [SSH key audit error](/articles/error-we-re-doing-an-ssh-key-audit) will be highlighted in the list of SSH keys.
-
-   {% endnote %}
+   > [!NOTE]
+   > If you're auditing your SSH keys due to an unsuccessful Git operation, the unverified key that caused the [SSH key audit error](/articles/error-we-re-doing-an-ssh-key-audit) will be highlighted in the list of SSH keys.
 
 1. Open Terminal.
 
@@ -98,12 +88,9 @@ You can delete unauthorized (or possibly compromised) SSH keys to ensure that an
    > 2048 SHA256:274ffWxgaxq/tSINAykStUL7XWyRNcRTlcST1Ei7gBQ /Users/USERNAME/.ssh/id_rsa (RSA)
    ```
 
-1. The SSH keys on {% data variables.product.product_name %} _should_ match the same keys on your computer.
+1. The SSH keys on {% data variables.product.github %} _should_ match the same keys on your computer.
 
 {% endlinux %}
 
-{% warning %}
-
-**Warning**: If you see an SSH key you're not familiar with on {% data variables.product.product_name %}, delete it immediately and contact {% data variables.contact.contact_support %} for further help. An unidentified public key may indicate a possible security concern.
-
-{% endwarning %}
+> [!WARNING]
+> If you see an SSH key you're not familiar with on {% data variables.product.github %}, delete it immediately and contact {% data variables.contact.contact_support %} for further help. An unidentified public key may indicate a possible security concern.

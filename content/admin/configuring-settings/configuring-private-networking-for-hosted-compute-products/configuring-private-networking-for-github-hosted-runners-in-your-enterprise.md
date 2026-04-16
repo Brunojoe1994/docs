@@ -1,20 +1,10 @@
 ---
 title: Configuring private networking for GitHub-hosted runners in your enterprise
 shortTitle: Configuring private networking
-intro: 'Learn how to use {% data variables.product.company_short %}-hosted runners with an Azure private network.'
+intro: Learn how to use {% data variables.product.company_short %}-hosted runners with an Azure private network.
 versions:
   ghec: '*'
-type: how_to
 permissions: Enterprise owners can configure private networking for GitHub-hosted runners at the enterprise level.
-topics:
-  - Actions
-  - Action development
-  - Azure Virtual Network
-  - Administrator
-  - Developer
-  - CI
-  - CD
-  - Enterprise
 redirect_from:
   - /actions/using-github-hosted-runners/connecting-to-a-private-network/configuring-an-azure-virtual-network-for-your-enterprise
   - /actions/using-github-hosted-runners/connecting-to-a-private-network/configuring-azure-resources-for-private-networking-with-github-hosted-runners
@@ -23,6 +13,9 @@ redirect_from:
   - /actions/using-github-hosted-runners/connecting-to-a-private-network/configuring-your-github-settings-for-use-with-azure-virtual-network
   - /admin/configuration/configuring-private-networking-for-hosted-compute-products/configuring-private-networking-for-github-hosted-runners
   - /admin/configuration/configuring-private-networking-for-hosted-compute-products/configuring-private-networking-for-github-hosted-runners-in-your-enterprise
+contentType: how-tos
+category:
+  - Install and configure your instance
 ---
 
 ## About Azure private networking for {% data variables.product.company_short %}-hosted runners
@@ -35,7 +28,10 @@ redirect_from:
 
 ### 1. Obtain the `databaseId` for your enterprise
 
-You can use the following GraphQL query to retrieve your enterprise `databaseId`. You will use the enterprise `databaseId` for the value of the `DATABASE_ID` environment variable in the next step. For more information on working with GraphQL, see "[AUTOTITLE](/graphql/guides/forming-calls-with-graphql)."
+> [!TIP]
+> Your token will require at minimum `read:enterprise` permissions to perform a successful query.
+
+You can use the following GraphQL query to retrieve your enterprise `databaseId`. You will use the enterprise `databaseId` for the value of the `DATABASE_ID` environment variable in the next step. For more information on working with GraphQL, see [AUTOTITLE](/graphql/guides/forming-calls-with-graphql).
 
 {% data reusables.enterprise_migrations.retrieve-enterprise-id-graphql %}
 
@@ -56,7 +52,9 @@ Variables
 }
 ```
 
-Alternatively, you can use the following curl command to find your `databaseId`.
+#### Example for {% data variables.product.prodname_dotcom_the_website %}
+
+You can use the following curl command to find your `databaseId`.
 
 ```shell copy
 curl -H "Authorization: Bearer BEARER_TOKEN" -X POST \
@@ -67,6 +65,16 @@ curl -H "Authorization: Bearer BEARER_TOKEN" -X POST \
       }' \
 https://api.github.com/graphql
 ```
+
+#### Example for {% data variables.enterprise.data_residency_site %}
+
+You can use the following {% data variables.product.prodname_cli %} commands to retrieve the `databaseId`. Replace SUBDOMAIN with your enterprise's subdomain of {% data variables.enterprise.data_residency_site %}.
+
+  ```shell copy
+  gh auth login -s 'read:enterprise' -h SUBDOMAIN.ghe.com
+
+  gh api graphql --hostname SUBDOMAIN.ghe.com -f query='query($slug: String!) { enterprise (slug: $slug) { slug databaseId } }' -f slug='SUBDOMAIN'
+  ```
 
 {% data reusables.actions.azure-vnet-configure-azure-resources-script %}
 
@@ -87,26 +95,20 @@ https://api.github.com/graphql
 
 ### 2. Create a runner group for your enterprise
 
-{% note %}
+> [!NOTE]
+> For the runner group to be accessible by repositories within your organizations, those repositories must have access to that runner group at the organization level. For more information, see [AUTOTITLE](/actions/using-github-hosted-runners/controlling-access-to-larger-runners#changing-which-repositories-can-access-a-runner-group).
 
-**Note:** For the runner group to be accessible by repositories within your organizations, those repositories must have access to that runner group at the organization level. For more information, see "[AUTOTITLE](/actions/using-github-hosted-runners/controlling-access-to-larger-runners#changing-which-repositories-can-access-a-runner-group)."
-
-{% endnote %}
-
-1. Create a new runner group for your enterprise. For more information about how to create a runner group, see "[AUTOTITLE](/actions/using-github-hosted-runners/controlling-access-to-larger-runners#creating-a-runner-group-for-an-enterprise)."
+1. Create a new runner group for your enterprise. For more information about how to create a runner group, see [AUTOTITLE](/actions/using-github-hosted-runners/controlling-access-to-larger-runners#creating-a-runner-group-for-an-enterprise).
 {% data reusables.actions.workflows.runner-groups-enterprise-organization-access %}
 1. While configuring your runner group, under "Network configurations," use the dropdown menu to select the network configuration you created for the Azure VNET.
 1. To create the group and apply the policy, click **Create group**.
 
 ### 3. Add the {% data variables.product.company_short %}-hosted runner to the enterprise runner group
 
-{% note %}
+> [!NOTE]
+> When adding your {% data variables.product.company_short %}-hosted runner to a runner group, select the runner group you created in the previous procedures.
 
-**Note:** When adding your {% data variables.product.company_short %}-hosted runner to a runner group, select the runner group you created in the previous procedures.
-
-{% endnote %}
-
-1. Add the {% data variables.product.company_short %}-hosted runner to the runner group. For more information, see "[AUTOTITLE](/enterprise-cloud@latest/actions/using-github-hosted-runners/managing-larger-runners#adding-a-larger-runner-to-an-enterprise)."
+1. Add the {% data variables.product.company_short %}-hosted runner to the runner group. For more information, see [AUTOTITLE](/enterprise-cloud@latest/actions/using-github-hosted-runners/managing-larger-runners#adding-a-larger-runner-to-an-enterprise).
 
 ### 4. Optionally, manage network configurations
 
@@ -116,6 +118,33 @@ https://api.github.com/graphql
 1. To edit a network configuration, to the right of the network configuration, click {% octicon "pencil" aria-label="Edit a network configuration" %}. Then click **Edit configuration**.
 1. To disable a network configuration, to the right of the network configuration, click {% octicon "kebab-horizontal" aria-label="Menu" %}. Then click **Disable**.
 1. To delete a network configuration, to the right of the network configuration, click {% octicon "kebab-horizontal" aria-label="Menu" %}. Then click **Delete**.
+
+### 5. Optionally, add a failover network to a network configuration
+
+{% data reusables.actions.azure-vnet-about-failover %}
+
+Before adding a failover network, ensure you have configured the Azure resources (VNET, subnet, network security group, and network settings resource) for the secondary subnet, following the same "Configuring your Azure resources" procedures above. The failover subnet can be in a different Azure region from your primary subnet.
+
+{% data reusables.enterprise-accounts.access-enterprise %}
+{% data reusables.enterprise-accounts.settings-tab %}
+1. In the left sidebar, click **Hosted compute networking**.
+1. Click the edit icon ({% octicon "pencil" aria-label="Edit a network configuration" %}) next to the network configuration you want to add a failover network to. Then click **Edit configuration**.
+1. Click **Add failover network**.
+1. In the popup window, enter the network settings resource ID for your secondary (failover) Azure subnet.
+1. Click **Add Azure Virtual Network**.
+1. You will now see two subnets listed in the network configuration: the primary and the failover, labeled accordingly.
+
+### 6. Optionally, enable or disable the failover network
+
+After adding a failover network, you can enable it to route traffic through the secondary subnet, or disable it to return to the primary subnet.
+
+{% data reusables.enterprise-accounts.access-enterprise %}
+{% data reusables.enterprise-accounts.settings-tab %}
+1. In the left sidebar, click **Hosted compute networking**.
+1. Click the edit icon ({% octicon "pencil" aria-label="Edit a network configuration" %}) next to the network configuration. Then click **Edit configuration**.
+1. To switch to the failover network, click **Enable failover VNET**. Runner traffic will be routed through the failover subnet.
+1. To switch back to the primary network, click **Disable failover VNET**. Runner traffic will return to the primary subnet.
+
 
 ## Enabling creation of network configurations for organizations
 

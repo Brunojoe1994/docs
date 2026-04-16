@@ -8,9 +8,9 @@ redirect_from:
 versions:
   fpt: '*'
   ghec: '*'
-topics:
-  - Community
 shortTitle: View blocked users in account
+category:
+  - Block users and report abuse
 ---
 
 {% data reusables.user-settings.access_settings %}
@@ -19,6 +19,6 @@ shortTitle: View blocked users in account
 
 ## Further reading
 
-* "[AUTOTITLE](/communities/maintaining-your-safety-on-github/blocking-a-user-from-your-personal-account)"
-* "[AUTOTITLE](/communities/maintaining-your-safety-on-github/unblocking-a-user-from-your-personal-account)"
-* "[AUTOTITLE](/communities/maintaining-your-safety-on-github/viewing-users-who-are-blocked-from-your-organization)"
+* [AUTOTITLE](/communities/maintaining-your-safety-on-github/blocking-a-user-from-your-personal-account)
+* [AUTOTITLE](/communities/maintaining-your-safety-on-github/unblocking-a-user-from-your-personal-account)
+* [AUTOTITLE](/communities/maintaining-your-safety-on-github/viewing-users-who-are-blocked-from-your-organization)

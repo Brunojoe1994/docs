@@ -8,8 +8,8 @@
  *
  */
 
-import * as github from '@actions/github'
-import core from '@actions/core'
+import github from '@actions/github'
+import { setOutput } from '@actions/core'
 import { program } from 'commander'
 
 const { GITHUB_TOKEN, GITHUB_REPOSITORY } = process.env
@@ -27,7 +27,7 @@ if (GITHUB_REPOSITORY) {
   const headSHA = process.env.HEAD_SHA || context.payload.pull_request!.head.sha
 
   const markdown = await main(owner, repo, baseSHA, headSHA)
-  core.setOutput('markdown', markdown)
+  setOutput('markdown', markdown)
 } else {
   program
     .description('Print a nice Markdown comment if there were features deleted in a PR.')
@@ -78,12 +78,11 @@ async function main(owner: string, repo: string, baseSHA: string, headSHA: strin
     return ''
   }
 
-  let markdown = '⚠️ 🙀 **You deleted some features** 🙀 ⚠️\n\n'
+  let markdown = '**Please restore deleted features**\n\n'
   markdown +=
-    "Even if you don't reference these features anymore, as of this branch, you should not delete them.\n"
+    "Even if you don't reference these features anymore, as of this branch, please do not delete them.\n"
   markdown += 'They might still be referenced in translated content.\n'
-  markdown +=
-    'The weekly "Delete orphaned features" workflow will worry about cleaning those up.\n\n'
+  markdown += 'The weekly "Delete orphaned features" workflow will clean those up.\n\n'
   markdown += '**To *undo* these removals run this command:**\n\n'
   markdown += `
 \`\`\`sh

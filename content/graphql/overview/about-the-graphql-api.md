@@ -5,8 +5,8 @@ versions:
   fpt: '*'
   ghec: '*'
   ghes: '*'
-topics:
-  - API
+category:
+  - Get started and make API calls
 ---
 
 ## Overview
@@ -19,7 +19,7 @@ Here are some quick links to get you up and running with the GraphQL API:
 * [Rate limits](/graphql/overview/resource-limitations)
 * [Migrating from REST](/graphql/guides/migrating-from-rest-to-graphql)
 
-For more information about {% data variables.product.company_short %}'s APIs, see "[AUTOTITLE](/rest/overview/about-githubs-apis)."
+For more information about {% data variables.product.company_short %}'s APIs, see [AUTOTITLE](/rest/overview/about-githubs-apis).
 
 ## About GraphQL
 
@@ -48,8 +48,6 @@ The docs in the sidebar are generated from the {% data variables.product.prodnam
 * Allowed operations: [queries](/graphql/reference/queries) and [mutations](/graphql/reference/mutations).
 
 * Schema-defined types: [scalars](/graphql/reference/scalars), [objects](/graphql/reference/objects), [enums](/graphql/reference/enums), [interfaces](/graphql/reference/interfaces), [unions](/graphql/reference/unions), and [input objects](/graphql/reference/input-objects).
-
-You can access this same content via the [Explorer Docs sidebar](/graphql/guides/using-the-explorer#accessing-the-sidebar-docs). Note that you may need to rely on both the docs and the schema validation to successfully call the GraphQL API.
 
 For other information, such as authentication and rate limit details, check out the [guides](/graphql/guides).
 

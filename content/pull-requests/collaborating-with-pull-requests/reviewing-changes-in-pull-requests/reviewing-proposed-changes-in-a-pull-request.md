@@ -10,19 +10,65 @@ versions:
   fpt: '*'
   ghes: '*'
   ghec: '*'
-topics:
-  - Pull requests
 shortTitle: Review proposed changes
+category:
+  - Review pull requests
 ---
 ## About reviewing pull requests
 
-You can review changes in a pull request one file at a time. While reviewing the files in a pull request, you can leave individual comments on specific changes. After you finish reviewing each file, you can mark the file as viewed. This collapses the file, helping you identify the files you still need to review. A progress bar in the pull request header shows the number of files you've viewed. After reviewing as many files as you want, you can approve the pull request or request additional changes by submitting your review with a summary comment.
+It's best to review changes in a pull request one file at a time:
 
-{% data reusables.search.requested_reviews_search_tip %}
+* **Examine** each individual file changed in the pull request.
+* **Leave comments** on specific changes.
+* After reviewing a file, mark it as **Viewed** to collapse it and track your progress.
+* The **progress bar** in the pull request header shows how many files you've viewed.
+* When you've finished, you can **approve** the pull request or **request changes** by submitting your review with a summary comment.
 
-## Starting a review
+{% ifversion copilot %}
+
+If the pull request was raised by {% data variables.product.prodname_copilot %} then, when you submit your comments, {% data variables.product.prodname_copilot_short %} will carry out more work to respond to your comments and will push a new commit to the pull request with further changes. See [AUTOTITLE](/copilot/concepts/agents/cloud-agent/about-cloud-agent).
+
+{% endif %}
 
 {% webui %}
+
+## Understanding the purpose of the pull request
+
+Gaining a clear understanding of the motivation behind a pull request helps inform your review, so you can keep it targeted and meaningful, and provide feedback that is aligned with the pull request author’s intent and the project's goals.
+
+There are several options available to you to better understand the context and rationale for proposed changes.
+
+### Using the pull request sidebar for context
+
+In the pull request sidebar, you can find valuable context including:
+
+* Linked **issues** or **discussions**: Review these to understand the problems or goals that the pull request aims to address, or to gather information on, for example, any background, design decisions, or current debates.
+* Linked **projects** or **milestones**: Review how this pull request fits within larger projects or upcoming releases.
+
+Use this information to frame your review and check if the goals of the pull request align with the original intent.
+
+{% ifversion copilot %}
+
+### Using {% data variables.copilot.copilot_chat_short %} to understand the rationale
+
+You can ask {% data variables.copilot.copilot_chat_short %} for help understanding the pull request’s intent or for clarification on any part of the change.
+
+1. At the top right of the pull request page, click the **{% octicon "copilot" aria-label="Copilot icon" %}** button next to the search bar.
+
+   {% data variables.copilot.copilot_chat_short %} is displayed, with the pull request attached as context to the prompt window.
+
+1. In the prompt box, type a question and press <kbd>Enter</kbd>. For example, you could enter:
+
+   * `What problem does this pull request solve?`
+   * `Why were these changes needed?`
+   * `Summarize the goals of this PR based on the linked issue.`
+   * `How does this PR relate to issue ISSUE-URL?`
+
+{% data variables.copilot.copilot_chat_short %} can help you clarify the bigger picture before diving into line-level review.
+
+{% endif %}
+
+## Starting a review
 
 {% data reusables.repositories.sidebar-pr %}
 {% data reusables.repositories.choose-pr-review %}
@@ -32,16 +78,15 @@ You can change the format of the diff view in this tab by clicking {% octicon "g
    ![Screenshot of the "Files changed" tab for a pull request. The "Diff view" menu is outlined in dark orange.](/assets/images/help/pull_requests/diff-settings-menu.png)
 
    You can also choose to hide whitespace differences. The choice you make only applies to this pull request and will be remembered the next time you visit this page.
-1. Optionally, filter the files to show only the files you want to review{% ifversion pr-tree-view %} or use the file tree to navigate to a specific file{% endif %}. For more information, see "[AUTOTITLE](/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/filtering-files-in-a-pull-request)."
+1. Optionally, filter the files to show only the files you want to review or use the file tree to navigate to a specific file. For more information, see [AUTOTITLE](/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/filtering-files-in-a-pull-request).
 {%- ifversion ghec %}
-1. Optionally, if you have access to {% data variables.product.prodname_copilot_enterprise %}, you can ask {% data variables.product.prodname_copilot_short %} about the changes in a file in a pull request by clicking {% octicon "kebab-horizontal" aria-label="Show options" %} at the top right of the file, clicking **Ask {% data variables.product.prodname_copilot_short %} about this diff**, then typing a request such as "Explain these changes." For more information, see "[AUTOTITLE](/enterprise-cloud@latest/copilot/github-copilot-chat/copilot-chat-in-github/using-github-copilot-chat-in-githubcom#asking-questions-about-a-specific-pull-request)."
+1. Optionally, if you have access to {% data variables.copilot.copilot_enterprise %}, you can ask {% data variables.product.prodname_copilot_short %} about the changes in a file in a pull request by clicking {% octicon "kebab-horizontal" aria-label="Show options" %} at the top right of the file, clicking **Ask {% data variables.product.prodname_copilot_short %} about this diff**, then typing a request such as "Explain these changes." For more information, see [AUTOTITLE](/enterprise-cloud@latest/copilot/github-copilot-chat/copilot-chat-in-github/using-github-copilot-chat-in-githubcom#asking-questions-about-a-specific-pull-request).
 {%- endif %}
 {% data reusables.repositories.start-line-comment %}
 {% data reusables.repositories.multiple-lines-comment %}
 {% data reusables.repositories.type-line-comment %}
 {% data reusables.repositories.suggest-changes %}
-{% ifversion pull-request-comment-on-file %}
-{% data reusables.repositories.start-file-comment %}{% endif %}
+{% data reusables.repositories.start-file-comment %}
 1. When you're done, click **Start a review**. If you have already started a review, you can click **Add review comment**.
 
 Before you submit your review, your line comments are _pending_ and only visible to you. You can edit pending comments anytime before you submit your review. To cancel a pending review, including all of its pending comments, click **Review changes** above the changed code, then click **Abandon review**.
@@ -53,10 +98,12 @@ Before you submit your review, your line comments are _pending_ and only visible
 
 {% codespaces %}
 
-You can use [{% data variables.product.prodname_github_codespaces %}](/codespaces/overview) to test, run, and review pull requests.
+## Reviewing a pull request
 
-1. Open the pull request in a codespace, as described in "[AUTOTITLE](/codespaces/developing-in-codespaces/using-github-codespaces-for-pull-requests#opening-a-pull-request-in-codespaces)."
-1. In the Activity Bar, click the **GitHub Pull Request** view. This view only appears when you open a pull request in a codespace.
+You can use [{% data variables.product.prodname_github_codespaces %}](/codespaces/quickstart) to test, run, and review pull requests.
+
+1. Open the pull request in a codespace, as described in [AUTOTITLE](/codespaces/developing-in-codespaces/using-github-codespaces-for-pull-requests#opening-a-pull-request-in-codespaces).
+1. In the Activity Bar, click the **{% data variables.product.github %} Pull Request** view. This view only appears when you open a pull request in a codespace.
 
    ![Screenshot of the {% data variables.product.prodname_vscode_shortname %} Activity Bar. The mouse pointer is hovering over an icon displaying the tooltip "{% data variables.product.prodname_dotcom %} Pull Request."](/assets/images/help/codespaces/github-pr-view.png)
 
@@ -74,14 +121,40 @@ You can use [{% data variables.product.prodname_github_codespaces %}](/codespace
 
    ![Screenshot of the side bar showing the dropdown options "Comment and Submit," "Approve and Submit," and "Request Changes and Submit."](/assets/images/help/codespaces/submit-review.png)
 
-For more information on reviewing pull requests in {% data variables.product.prodname_github_codespaces %}, see "[AUTOTITLE](/codespaces/developing-in-codespaces/using-github-codespaces-for-pull-requests)."
+For more information on reviewing pull requests in {% data variables.product.prodname_github_codespaces %}, see [AUTOTITLE](/codespaces/developing-in-codespaces/using-github-codespaces-for-pull-requests).
 
 {% endcodespaces %}
 {% endif %}
 
+{% webui %}
+{% ifversion copilot %}
+
+## Understanding changes in a pull request
+
+> [!NOTE] {% data reusables.copilot.copilot-requires-subscription %}
+
+{% data variables.product.prodname_copilot %} can help you quickly understand the changes in a pull request by providing context and explanations for specific commits. If you’re unsure about the purpose of a particular change or need more details about how it fits into the broader codebase, you can ask {% data variables.product.prodname_copilot_short %} questions about individual commits.
+
+1. Navigate to a commit on {% data variables.product.github %}.
+
+{% data reusables.copilot.open-copilot %}
+
+1. At the bottom of the {% data variables.product.prodname_copilot_short %} chat panel, in the "Ask {% data variables.product.prodname_copilot_short %}" box, type a question and press <kbd>Enter</kbd>. For example, you could enter:
+
+   * `Summarize the changes in this commit`
+   * `Who committed these changes?`
+   * `When was this commit made?`
+
+   > [!TIP]
+   > If you know the SHA for a commit, instead of navigating to the commit, you can ask {% data variables.product.prodname_copilot_short %} about the commit from any page in the repository on {% data variables.product.github %} by including the SHA in your message. For example, `What changed in commit a778e0eab?`
+
+{% data reusables.copilot.stop-response-generation %}
+
+{% endif %}
+
 ## Reviewing dependency changes
 
-If the pull request contains changes to dependencies you can use the dependency review for a manifest or lock file to see what has changed and check whether the changes introduce security vulnerabilities. For more information, see "[AUTOTITLE](/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request)."
+If the pull request contains changes to dependencies you can use the dependency review for a manifest or lock file to see what has changed and check whether the changes introduce security vulnerabilities. For more information, see [AUTOTITLE](/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request).
 
 {% data reusables.repositories.changed-files %}
 
@@ -116,7 +189,9 @@ After you've finished reviewing all the files you want in the pull request, subm
 
 {% data reusables.repositories.request-changes-tips %}
 
+{% endwebui %}
+
 ## Further reading
 
-* "[AUTOTITLE](/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches#require-pull-request-reviews-before-merging)"
-* "[AUTOTITLE](/issues/tracking-your-work-with-issues/filtering-and-searching-issues-and-pull-requests)"
+* [AUTOTITLE](/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches#require-pull-request-reviews-before-merging)
+* [AUTOTITLE](/issues/tracking-your-work-with-issues/filtering-and-searching-issues-and-pull-requests)

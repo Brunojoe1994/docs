@@ -6,13 +6,12 @@ versions:
 redirect_from:
   - /early-access/issues/about-slash-commands
   - /issues/tracking-your-work-with-issues/about-slash-commands
+category:
+  - Create and work with issues
 ---
 
-{% note %}
-
-**Note:** Slash commands are currently in {% data variables.release-phases.public_preview %} and subject to change.
-
-{% endnote %}
+> [!NOTE]
+> Slash commands are currently in {% data variables.release-phases.public_preview %} and subject to change.
 
 ## About slash commands
 

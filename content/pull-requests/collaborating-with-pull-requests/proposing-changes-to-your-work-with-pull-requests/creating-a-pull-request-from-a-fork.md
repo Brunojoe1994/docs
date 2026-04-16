@@ -11,9 +11,9 @@ versions:
   fpt: '*'
   ghes: '*'
   ghec: '*'
-topics:
-  - Pull requests
 shortTitle: Create a PR from a fork
+category:
+  - Create pull requests
 ---
 If your pull request compares your topic branch with a branch in the upstream repository as the base branch, then your topic branch is also called the "compare branch" of the pull request.
 
@@ -22,7 +22,7 @@ For example:
 * The base branch is the branch in the upstream (central) repository that you want to merge your changes into (e.g. `main`).
 * The pull request compares the changes proposed by the topic branch (`my-topic-branch`) with the base branch (`main`), so `my-topic-branch` is known as the “compare branch”.
 
-For more information about pull request branches, including examples, see "[AUTOTITLE](/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request#changing-the-branch-range-and-destination-repository)."
+For more information about pull request branches, including examples, see [AUTOTITLE](/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request#changing-the-branch-range-and-destination-repository).
 
 {% data reusables.pull_requests.perms-to-open-pull-request %}
 
@@ -49,5 +49,5 @@ For more information about pull request branches, including examples, see "[AUTO
 
 ## Further reading
 
-* "[AUTOTITLE](/pull-requests/collaborating-with-pull-requests/working-with-forks)"
-* "[AUTOTITLE](/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork)"
+* [AUTOTITLE](/pull-requests/collaborating-with-pull-requests/working-with-forks)
+* [AUTOTITLE](/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork)

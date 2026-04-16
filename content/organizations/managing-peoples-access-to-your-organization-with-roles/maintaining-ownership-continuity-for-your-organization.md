@@ -12,10 +12,9 @@ versions:
   fpt: '*'
   ghes: '*'
   ghec: '*'
-topics:
-  - Organizations
-  - Teams
 shortTitle: Maintain ownership continuity
+category:
+  - Assign roles and permissions
 ---
 
 ## About maintaining ownership continuity for your organization
@@ -24,14 +23,11 @@ shortTitle: Maintain ownership continuity
 
 Organization owners have full administrative access to the organization. {% data reusables.organizations.new-org-permissions-more-info %}
 
-{% note %}
+> [!NOTE]
+> As an organization owner, you can change the role of other organization members and owners. You can't change your own role.
 
-**Note**: As an organization owner, you can change the role of other organization members and owners. You can't change your own role.
-
-{% endnote %}
-
-{% ifversion enterprise-owner-join-org %}
-If your organization is owned by an enterprise account, any enterprise owner can make themselves an owner of your organization. For more information, see "[AUTOTITLE](/admin/user-management/managing-organizations-in-your-enterprise/managing-your-role-in-an-organization-owned-by-your-enterprise)."
+{% ifversion ghec or ghes %}
+If your organization is owned by an enterprise account, any enterprise owner can make themselves an owner of your organization. For more information, see [AUTOTITLE](/admin/user-management/managing-organizations-in-your-enterprise/managing-your-role-in-an-organization-owned-by-your-enterprise).
 {% endif %}
 
 ## Appointing an organization owner

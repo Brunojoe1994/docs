@@ -1,7 +1,7 @@
 import type { Response, NextFunction } from 'express'
 
 import type { ExtendedRequest, ProductExample } from '@/types'
-import { getDataByLanguage } from '@/data-directory/lib/get-data.js'
+import { getDataByLanguage } from '@/data-directory/lib/get-data'
 
 function getProductExampleData(
   product: string,
@@ -16,7 +16,7 @@ function getProductExampleData(
   try {
     return getDataByLanguage(`product-examples.${product}.${key}`, language)
   } catch (error) {
-    if (error instanceof Error && (error as any).code === 'ENOENT') return
+    if (error instanceof Error && 'code' in error && error.code === 'ENOENT') return
     throw error
   }
 }
