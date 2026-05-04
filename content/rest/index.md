@@ -51,7 +51,6 @@ children:
   - /guides
   - /actions
   - /activity
-  - /agent-tasks
   - /announcement-banners
   - /apps
   - /billing
@@ -66,6 +65,7 @@ children:
   - /collaborators
   - /commits
   - /copilot
+  - /copilot-spaces
   - /credentials
   - /dependabot
   - /dependency-graph

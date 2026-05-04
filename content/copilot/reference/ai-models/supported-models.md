@@ -40,8 +40,22 @@ This table lists the AI models available in {% data variables.product.prodname_c
 | Model name                                             | Provider  | Release status             | Agent mode | Ask mode | Edit mode |
 |--------------------------------------------------------|-----------|----------------------------|------------|----------|-----------|
 | {% for model in tables.copilot.model-release-status %} |
-| {{ model.name }}                                       | {{ model.provider }} | {{ model.release_status }} | {% if model.agent_mode == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.ask_mode == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.edit_mode == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} |
+| {{ model.name }}{% if model.name == 'GPT-5.4 nano' %}[^gpt54nano]{% endif %} | {{ model.provider }} | {{ model.release_status }} | {% if model.agent_mode == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.ask_mode == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.edit_mode == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} |
 | {% endfor %}                                           |
+
+{% endrowheaders %}
+
+## Supported AI models in {% data variables.copilot.copilot_auto_model_selection_short_cap_a %}
+
+This table lists the supported AI models for {% data variables.copilot.copilot_auto_model_selection_short_cap_a %}. Available models may be limited by model policies, including policies restricting {% data variables.product.prodname_copilot_short %} to data-resident or FedRAMP-compliant models.
+
+{% rowheaders %}
+
+| Model | {% data variables.copilot.copilot_cloud_agent %} | {% data variables.copilot.copilot_chat_short %} | {% data variables.copilot.copilot_cli_short %} |
+| --- | --- | --- | --- |
+| {% for model in tables.copilot.auto-model-selection %} |
+| {{ model.name }} | {% if model.cloud_agent == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.chat == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.cli == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} |
+| {% endfor %} |
 
 {% endrowheaders %}
 
@@ -72,7 +86,7 @@ The following table shows which models are available in each client.
 | Model | {% data variables.product.prodname_dotcom_the_website %} | {% data variables.copilot.copilot_cli_short %} | {% data variables.product.prodname_vscode %} | {% data variables.product.prodname_vs %} | Eclipse | Xcode | JetBrains IDEs |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | {% for model in tables.copilot.model-supported-clients %} |
-| {{ model.name }} | {% if model.dotcom == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.cli == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.vscode == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.vs == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.eclipse == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.xcode == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.jetbrains == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} |
+| {{ model.name }}{% if model.name == 'GPT-5.4 nano' %}[^gpt54nano]{% endif %} | {% if model.dotcom == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.cli == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.vscode == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.vs == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.eclipse == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.xcode == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} | {% if model.jetbrains == true %}{% octicon "check" aria-label="Included" %}{% else %}{% octicon "x" aria-label="Not included" %}{% endif %} |
 | {% endfor %} |
 
 {% endrowheaders %}
@@ -81,15 +95,25 @@ The following table shows which models are available in each client.
 
 The following table shows which AI models are available in each {% data variables.product.prodname_copilot_short %} plan. For more information about the plans, see [AUTOTITLE](/copilot/about-github-copilot/plans-for-github-copilot).
 
+{% data reusables.copilot.gpt-53-codex-student-model-picker-note %}
+
 {% data reusables.copilot.available-models-per-plan %}
 
 ## Model multipliers
+
+<!-- expires 2026-06-01 -->
+
+{% data reusables.copilot.ubb-announcement-cfi-cb-ce %}
+
+<!-- end expires 2026-06-01 -->
 
 > [!NOTE]
 > The multiplier for these models are subject to change.
 >
 > * {% data variables.copilot.copilot_claude_sonnet_46 %}
 > * {% data variables.copilot.copilot_gpt_54_mini %}
+
+{% data reusables.copilot.gpt-55-promo-period %}
 
 Each model has a premium request multiplier, based on its complexity and resource usage. If you are on a paid {% data variables.product.prodname_copilot_short %} plan, your premium request allowance is deducted according to this multiplier.
 
